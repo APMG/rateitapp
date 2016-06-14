@@ -13,7 +13,8 @@ When(/^I ask for that song's average rating$/) do
 end
 
 Then(/^I should get that song's average rating$/) do
-  pending # Write code here that turns the phrase above into concrete actions
+  json = JSON.parse(page.body)
+  expect(json['average']).to eq "3.3333"
 end
 
 Given(/^a set of ratings for several songs$/) do

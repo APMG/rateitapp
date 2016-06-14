@@ -14,5 +14,10 @@ module Rateitapp
     def count
       Rating.where(ratee_type: @type, ratee_id: @id).count
     end
+
+    private
+
+    # ActiveModelSerializers change.
+    alias :read_attribute_for_serialization :public_send
   end
 end

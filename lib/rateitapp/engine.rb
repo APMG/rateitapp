@@ -1,3 +1,5 @@
+require 'active_model_serializers'
+
 module Rateitapp
   class Engine < ::Rails::Engine
     isolate_namespace Rateitapp

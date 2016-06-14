@@ -1,4 +1,4 @@
 Rails.application.routes.draw do
 
-  mount Blahblah::Engine => "/blahblah"
+  mount Rateitapp::Engine => '/rateit'
 end

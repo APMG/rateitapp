@@ -27,3 +27,14 @@ Then(/^I should get those song's average ratings$/) do
     expect(item['average']).to eq '3.5'
   end
 end
+
+Given(/^I post a rating to the API$/) do
+  post '/api/v1/ratings', rating: 4, ratee_id: 47
+end
+
+Then(/^it is saved in the database$/) do
+  rating = Rateitapp::Rating.first
+  expect(rating).to_not be_nil
+  expect(rating.rating).to eq 4
+  expect(rating.ratee_id).to eq '47'
+end

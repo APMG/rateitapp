@@ -18,3 +18,13 @@ Feature: JSON API Averages
     Given an existing rating
     When I post that same rating to the API
     Then the existing record is updated in the database
+
+  Scenario: Return error on invalid rating
+    When I post an invalid rating to the API
+    Then I get an invalid rating error
+      And there is nothing in the database
+
+  Scenario: Fetch one rating for a user
+    Given an existing rating
+    When I request that user's rating for a song
+    Then I get the rating information for that song

@@ -16,5 +16,5 @@ Feature: JSON API Averages
 
   Scenario: Update an existing rating
     Given an existing rating
-    When I post a rating to the API
+    When I post that same rating to the API
     Then the existing record is updated in the database

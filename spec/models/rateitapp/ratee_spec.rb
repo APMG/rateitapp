@@ -33,7 +33,7 @@ module Rateitapp
 
     describe '#average' do
       before :each do
-        5.times do |i|
+        6.times do |i|
           create :rating, ratee_type: 'jukebox_song', ratee_id: 1234, rating: i+1
         end
         create :rating, ratee_type: 'jukebox_stuff', ratee_id: 1235, rating: 1
@@ -41,7 +41,7 @@ module Rateitapp
 
       subject { ratee.average }
 
-      it { is_expected.to eq 3 }
+      it { is_expected.to eq 3.5 }
     end
   end
 end

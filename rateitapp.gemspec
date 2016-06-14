@@ -28,4 +28,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'capybara'
   s.add_development_dependency 'cucumber-rails'
   s.add_development_dependency 'database_cleaner'
+  s.add_development_dependency 'pry'
+  s.add_development_dependency 'pry-byebug'
 end

@@ -1,11 +1,5 @@
 Given(/^a set of ratings for one song$/) do
-  # REFACTOR: Move to helper, and create a song_rating factory.
-  create :rating, rating: 5, ratee_type: 'jukebox_song', ratee_id: 4
-  create :rating, rating: 5, ratee_type: 'jukebox_song', ratee_id: 4
-  create :rating, rating: 3, ratee_type: 'jukebox_song', ratee_id: 4
-  create :rating, rating: 2, ratee_type: 'jukebox_song', ratee_id: 4
-  create :rating, rating: 4, ratee_type: 'jukebox_song', ratee_id: 4
-  create :rating, rating: 1, ratee_type: 'jukebox_song', ratee_id: 4
+  6.times { |i| create :song_rating, rating: i+1, ratee_id: 4 }
 end
 
 When(/^I ask for that song's average rating$/) do
@@ -14,17 +8,22 @@ end
 
 Then(/^I should get that song's average rating$/) do
   json = JSON.parse(page.body)
-  expect(json['average']).to eq "3.3333"
+  expect(json.first['average']).to eq '3.5'
 end
 
 Given(/^a set of ratings for several songs$/) do
-  pending # Write code here that turns the phrase above into concrete actions
+  6.times { |i| create :song_rating, rating: i+1, ratee_id: 1 }
+  6.times { |i| create :song_rating, rating: i+1, ratee_id: 2 }
+  6.times { |i| create :song_rating, rating: i+1, ratee_id: 3 }
 end
 
 When(/^I ask for those song's average ratings$/) do
-  pending # Write code here that turns the phrase above into concrete actions
+  visit '/api/v1/ratees/jukebox_song/1,2,3'
 end
 
 Then(/^I should get those song's average ratings$/) do
-  pending # Write code here that turns the phrase above into concrete actions
+  json = JSON.parse(page.body)
+  json.each do |item|
+    expect(item['average']).to eq '3.5'
+  end
 end

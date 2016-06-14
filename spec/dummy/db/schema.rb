@@ -11,15 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160614155710) do
+ActiveRecord::Schema.define(version: 20160614215245) do
 
   create_table "rateitapp_ratings", force: :cascade do |t|
-    t.integer  "rating",     limit: 4
-    t.string   "ratee_type", limit: 255
-    t.string   "ratee_id",   limit: 255
-    t.integer  "user_id",    limit: 4
+    t.integer  "rating",     limit: 4,   null: false
+    t.string   "ratee_type", limit: 255, null: false
+    t.string   "ratee_id",   limit: 255, null: false
+    t.integer  "user_id",    limit: 4,   null: false
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
   end
+
+  add_index "rateitapp_ratings", ["user_id", "ratee_type", "ratee_id"], name: "index_rateitapp_ratings_on_user_id_and_ratee_type_and_ratee_id", unique: true, using: :btree
 
 end

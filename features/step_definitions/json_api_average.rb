@@ -34,7 +34,25 @@ end
 
 Then(/^it is saved in the database$/) do
   rating = Rateitapp::Rating.first
+
   expect(rating).to_not be_nil
   expect(rating.rating).to eq 4
   expect(rating.ratee_id).to eq '47'
+end
+
+Given(/^an existing rating$/) do
+  create :song_rating, rating: 5, ratee_id: 11
+end
+
+When(/^I post that same rating to the API$/) do
+  post '/api/v1/ratings', rating: 2, ratee_type: 'jukebox_song', ratee_id: 11
+end
+
+Then(/^the existing record is updated in the database$/) do
+  rating = Rateitapp::Rating.first
+
+  expect(Rateitapp::Rating.count).to eq 1
+  expect(rating).to_not be_nil
+  expect(rating.rating).to eq 2
+  expect(rating.ratee_id).to eq '11'
 end

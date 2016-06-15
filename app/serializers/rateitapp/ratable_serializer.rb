@@ -1,5 +1,5 @@
 module Rateitapp
-  class RateeSerializer < ActiveModel::Serializer
+  class RatableSerializer < ActiveModel::Serializer
     attributes :type
     attributes :id
     attributes :average

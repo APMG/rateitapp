@@ -1,9 +1,9 @@
 Given(/^a set of ratings for one song$/) do
-  6.times { |i| create :song_rating, rating: i+1, ratee_id: 4 }
+  6.times { |i| create :song_rating, value: i+1, ratable_id: 4 }
 end
 
 When(/^I ask for that song's average rating$/) do
-  visit '/api/v1/ratees/jukebox_song/4'
+  visit '/api/v1/ratables/jukebox_song/4'
 end
 
 Then(/^I should get that song's average rating$/) do
@@ -12,13 +12,13 @@ Then(/^I should get that song's average rating$/) do
 end
 
 Given(/^a set of ratings for several songs$/) do
-  6.times { |i| create :song_rating, rating: i+1, ratee_id: 1 }
-  6.times { |i| create :song_rating, rating: i+1, ratee_id: 2 }
-  6.times { |i| create :song_rating, rating: i+1, ratee_id: 3 }
+  6.times { |i| create :song_rating, value: i+1, ratable_id: 1 }
+  6.times { |i| create :song_rating, value: i+1, ratable_id: 2 }
+  6.times { |i| create :song_rating, value: i+1, ratable_id: 3 }
 end
 
 When(/^I ask for those song's average ratings$/) do
-  visit '/api/v1/ratees/jukebox_song/1,2,3'
+  visit '/api/v1/ratables/jukebox_song/1,2,3'
 end
 
 Then(/^I should get those song's average ratings$/) do
@@ -29,23 +29,23 @@ Then(/^I should get those song's average ratings$/) do
 end
 
 Given(/^I post a rating to the API$/) do
-  post '/api/v1/ratings', rating: 4, ratee_type: 'jukebox_song', ratee_id: 47, user_id: 2
+  post '/api/v1/ratings', value: 4, ratable_type: 'jukebox_song', ratable_id: 47, user_id: 2
 end
 
 Then(/^it is saved in the database$/) do
   rating = Rateitapp::Rating.first
 
   expect(rating).to_not be_nil
-  expect(rating.rating).to eq 4
-  expect(rating.ratee_id).to eq '47'
+  expect(rating.value).to eq 4
+  expect(rating.ratable_id).to eq '47'
 end
 
 Given(/^an existing rating$/) do
-  create :song_rating, rating: 5, ratee_id: 11, user_id: 2
+  create :song_rating, value: 5, ratable_id: 11, user_id: 2
 end
 
 When(/^I post that same rating to the API$/) do
-  post '/api/v1/ratings', rating: 2, ratee_type: 'jukebox_song', ratee_id: 11, user_id: 2
+  post '/api/v1/ratings', value: 2, ratable_type: 'jukebox_song', ratable_id: 11, user_id: 2
 end
 
 Then(/^the existing record is updated in the database$/) do
@@ -53,6 +53,6 @@ Then(/^the existing record is updated in the database$/) do
 
   expect(Rateitapp::Rating.count).to eq 1
   expect(rating).to_not be_nil
-  expect(rating.rating).to eq 2
-  expect(rating.ratee_id).to eq '11'
+  expect(rating.value).to eq 2
+  expect(rating.ratable_id).to eq '11'
 end

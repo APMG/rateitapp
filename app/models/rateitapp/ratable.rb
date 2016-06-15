@@ -1,5 +1,5 @@
 module Rateitapp
-  class Ratee
+  class Ratable
     attr_reader :type, :id
 
     def initialize(type, id)
@@ -8,11 +8,11 @@ module Rateitapp
     end
 
     def average
-      Rating.where(ratee_type: @type, ratee_id: @id).average(:rating)
+      Rating.where(ratable_type: @type, ratable_id: @id).average(:value)
     end
 
     def count
-      Rating.where(ratee_type: @type, ratee_id: @id).count
+      Rating.where(ratable_type: @type, ratable_id: @id).count
     end
 
     private

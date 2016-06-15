@@ -14,14 +14,14 @@
 ActiveRecord::Schema.define(version: 20160614215245) do
 
   create_table "rateitapp_ratings", force: :cascade do |t|
-    t.integer  "rating",     limit: 4,   null: false
-    t.string   "ratee_type", limit: 255, null: false
-    t.string   "ratee_id",   limit: 255, null: false
-    t.integer  "user_id",    limit: 4,   null: false
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.integer  "value",        limit: 4,   null: false
+    t.string   "ratable_type", limit: 255, null: false
+    t.string   "ratable_id",   limit: 255, null: false
+    t.integer  "user_id",      limit: 4,   null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
   end
 
-  add_index "rateitapp_ratings", ["user_id", "ratee_type", "ratee_id"], name: "index_rateitapp_ratings_on_user_id_and_ratee_type_and_ratee_id", unique: true, using: :btree
+  add_index "rateitapp_ratings", ["user_id", "ratable_type", "ratable_id"], name: "primary_composite_key_index", unique: true, using: :btree
 
 end

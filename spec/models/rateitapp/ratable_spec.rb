@@ -1,19 +1,19 @@
 require 'rails_helper'
 
 module Rateitapp
-  RSpec.describe Ratee do
+  RSpec.describe Ratable do
     let(:type) { 'jukebox_song' }
     let(:id) { 1234 }
-    let(:ratee) { Ratee.new type, id }
+    let(:ratable) { Ratable.new type, id }
 
     describe '#type' do
-      subject { ratee.type }
+      subject { ratable.type }
 
       it { is_expected.to eq 'jukebox_song' }
     end
 
     describe '#id' do
-      subject { ratee.id }
+      subject { ratable.id }
 
       it { is_expected.to eq '1234' }
     end
@@ -21,12 +21,12 @@ module Rateitapp
     describe '#count' do
       before :each do
         5.times do |i|
-          create :rating, ratee_type: 'jukebox_song', ratee_id: 1234, rating: i+1
+          create :rating, ratable_type: 'jukebox_song', ratable_id: 1234, value: i+1
         end
-        create :rating, ratee_type: 'jukebox_stuff', ratee_id: 1235, rating: 1
+        create :rating, ratable_type: 'jukebox_stuff', ratable_id: 1235, value: 1
       end
 
-      subject { ratee.count }
+      subject { ratable.count }
 
       it { is_expected.to eq 5 }
     end
@@ -34,12 +34,12 @@ module Rateitapp
     describe '#average' do
       before :each do
         6.times do |i|
-          create :rating, ratee_type: 'jukebox_song', ratee_id: 1234, rating: i+1
+          create :rating, ratable_type: 'jukebox_song', ratable_id: 1234, value: i+1
         end
-        create :rating, ratee_type: 'jukebox_stuff', ratee_id: 1235, rating: 1
+        create :rating, ratable_type: 'jukebox_stuff', ratable_id: 1235, value: 1
       end
 
-      subject { ratee.average }
+      subject { ratable.average }
 
       it { is_expected.to eq 3.5 }
     end

@@ -1,3 +1,8 @@
+services:
+  - mysql
+before_script:
+  - mysql -e 'CREATE DATABASE rateitapp_test;'
+  - cp config/database.ci.yml config/database.yml
 language: ruby
 rvm:
   - 2.3.0

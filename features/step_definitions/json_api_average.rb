@@ -29,7 +29,7 @@ Then(/^I should get those song's average ratings$/) do
 end
 
 Given(/^I post a rating to the API$/) do
-  post '/api/v1/ratings', rating: 4, ratee_id: 47
+  post '/api/v1/ratings', rating: 4, ratee_type: 'jukebox_song', ratee_id: 47, user_id: 2
 end
 
 Then(/^it is saved in the database$/) do
@@ -41,11 +41,11 @@ Then(/^it is saved in the database$/) do
 end
 
 Given(/^an existing rating$/) do
-  create :song_rating, rating: 5, ratee_id: 11
+  create :song_rating, rating: 5, ratee_id: 11, user_id: 2
 end
 
 When(/^I post that same rating to the API$/) do
-  post '/api/v1/ratings', rating: 2, ratee_type: 'jukebox_song', ratee_id: 11
+  post '/api/v1/ratings', rating: 2, ratee_type: 'jukebox_song', ratee_id: 11, user_id: 2
 end
 
 Then(/^the existing record is updated in the database$/) do

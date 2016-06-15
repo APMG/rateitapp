@@ -4,6 +4,8 @@ FactoryGirl.define do
       factory :song_rating do
         ratee_type 'jukebox_song'
       end
+
+      sequence(:user_id) { |i| i }
     end
   end
 end

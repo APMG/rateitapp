@@ -7,13 +7,11 @@ module Rateitapp
     end
 
     def show
-      # ratables = params[:ratable_id].split(',').map do |ratable_id|
-        # Ratable.new params[:ratable_type], ratable_id
-      # end
+      ratings = params[:ratable_id].split(',').map do |ratable_id|
+        Rating.find_by(ratable_type: params[:ratable_type], ratable_id: ratable_id, user_id: params[:user_id])
+      end
 
-      rating = Rating.find_by(rating_params)
-
-      serialization = ActiveModelSerializers::SerializableResource.new(rating)
+      serialization = ActiveModelSerializers::SerializableResource.new(ratings)
       render json: serialization.to_json
     end
 

@@ -28,3 +28,8 @@ Feature: JSON API Averages
     Given an existing rating
     When I request a user's rating for that song
     Then I get the rating information for that song
+
+  Scenario: Fetch several ratings for a user
+    Given several existing ratings
+    When I request a user's ratings for those songs
+    Then I get the rating information for those songs

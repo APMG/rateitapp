@@ -5,7 +5,10 @@ module Rateitapp
   # Controller for actions involving ratings.
   class RatingsController < ApplicationController
     def index
-      render json: {}
+      ratings = Rating.where(ratable_type: params[:ratable_type], user_id: params[:user_id])
+      
+      serialization = ActiveModelSerializers::SerializableResource.new(ratings)
+      render json: serialization.to_json
     end
 
     def show

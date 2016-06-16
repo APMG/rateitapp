@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 Given(/^a set of ratings for one song$/) do
-  6.times { |_i| create :rating, ratable_type: 'jukebox_song', ratable_id: 11 }
+  6.times { |i| create :rating, ratable_type: 'jukebox_song', ratable_id: 11 }
 end
 
 When(/^I ask for that song's average rating$/) do
@@ -86,4 +86,22 @@ Then(/^I get the rating information for those songs$/) do
     expect(item['ratable_type']).to eq 'jukebox_song'
     expect(item['user_id']).to eq 2
   end
+end
+
+Given(/^a set of ratings for several ratable types$/) do
+  3.times do |i|
+    4.times { |t| create :rating, ratable_type: "thing_type_#{ i }", user_id: 2 }
+  end
+end
+
+When(/^I request all of a user's ratings from a ratable type$/) do
+  visit '/users/2/ratings/thing_type_2'
+end
+
+Then(/^I get the ratings information for that ratable type$/) do
+  json = JSON.parse(page.body)
+
+  expect(json.count).to eq 4
+  expect(json.first['ratable_type']).to eq 'thing_type_2'
+  expect(json.first['user_id']).to eq 2
 end

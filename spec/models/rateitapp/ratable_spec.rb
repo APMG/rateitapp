@@ -3,14 +3,14 @@ require 'rails_helper'
 
 module Rateitapp
   RSpec.describe Ratable do
-    let(:type) { 'jukebox_song' }
+    let(:type) { 'song' }
     let(:id) { 1234 }
     let(:ratable) { Ratable.new type, id }
 
     describe '#type' do
       subject { ratable.type }
 
-      it { is_expected.to eq 'jukebox_song' }
+      it { is_expected.to eq 'song' }
     end
 
     describe '#id' do
@@ -22,9 +22,9 @@ module Rateitapp
     describe '#count' do
       before :each do
         5.times do |i|
-          create :rating, ratable_type: 'jukebox_song', ratable_id: 1234, value: i + 1
+          create :rating, ratable_type: 'song', ratable_id: 1234, value: i + 1
         end
-        create :rating, ratable_type: 'jukebox_stuff', ratable_id: 1235, value: 1
+        create :rating, ratable_type: 'other_stuff', ratable_id: 1235, value: 1
       end
 
       subject { ratable.count }
@@ -35,9 +35,9 @@ module Rateitapp
     describe '#average' do
       before :each do
         6.times do |i|
-          create :rating, ratable_type: 'jukebox_song', ratable_id: 1234, value: i + 1
+          create :rating, ratable_type: 'song', ratable_id: 1234, value: i + 1
         end
-        create :rating, ratable_type: 'jukebox_stuff', ratable_id: 1235, value: 1
+        create :rating, ratable_type: 'other_stuff', ratable_id: 1235, value: 1
       end
 
       subject { ratable.average }

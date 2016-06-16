@@ -1,6 +1,21 @@
 # frozen_string_literal: true
+Given(/^a song plugin$/) do
+  song_plugin = SuccessPlugin.new
+  Rateitapp.plugin_manager.add song_plugin
+end
+
+When(/^I post a rating to the API with an invalid type$/) do
+  post '/users/2/ratings', value: 4, ratable_type: 'not_a_song', ratable_id: 47, user_id: 2
+end
+
+Then(/^it returns an error$/) do
+  expect(last_response.status).to eq 400
+  json = JSON.parse(last_response.body)
+  expect(json['error']).to eq true
+end
+
 Given(/^a set of ratings for one song$/) do
-  6.times { create :rating, ratable_type: 'jukebox_song', ratable_id: 11 }
+  6.times { create :rating, ratable_type: 'song', ratable_id: 11 }
 end
 
 Given(/^a set of ratings for several songs$/) do
@@ -10,7 +25,7 @@ Given(/^a set of ratings for several songs$/) do
 end
 
 Given(/^I post a rating to the API$/) do
-  post '/users/2/ratings', value: 4, ratable_type: 'jukebox_song', ratable_id: 47, user_id: 2
+  post '/users/2/ratings', value: 4, ratable_type: 'song', ratable_id: 47, user_id: 2
 end
 
 Given(/^an existing rating$/) do
@@ -28,15 +43,15 @@ Given(/^a set of ratings for several ratable types$/) do
 end
 
 When(/^I ask for the composite rating for that song$/) do
-  visit '/ratables/jukebox_song/11'
+  visit '/ratables/song/11'
 end
 
 When(/^I ask for those songs' ratings$/) do
-  visit '/ratables/jukebox_song/1,2,3'
+  visit '/ratables/song/1,2,3'
 end
 
 When(/^I post that same rating to the API$/) do
-  post '/users/2/ratings', value: 2, ratable_type: 'jukebox_song', ratable_id: 11, user_id: 2
+  post '/users/2/ratings', value: 2, ratable_type: 'song', ratable_id: 11, user_id: 2
 end
 
 When(/^I post an invalid rating to the API$/) do
@@ -44,11 +59,11 @@ When(/^I post an invalid rating to the API$/) do
 end
 
 When(/^I request a user's rating for that song$/) do
-  visit '/users/2/ratings/jukebox_song/11'
+  visit '/users/2/ratings/song/11'
 end
 
 When(/^I request a user's ratings for those songs$/) do
-  visit '/users/2/ratings/jukebox_song/1,2,3'
+  visit '/users/2/ratings/song/1,2,3'
 end
 
 When(/^I request all of a user's ratings from a ratable type$/) do
@@ -100,7 +115,7 @@ Then(/^I get the rating information for that song$/) do
   json = JSON.parse(page.body)
 
   expect(json.first['value']).to eq 5
-  expect(json.first['ratable_type']).to eq 'jukebox_song'
+  expect(json.first['ratable_type']).to eq 'song'
   expect(json.first['ratable_id']).to eq '11'
   expect(json.first['user_id']).to eq 2
 end
@@ -109,7 +124,7 @@ Then(/^I get the rating information for those songs$/) do
   json = JSON.parse(page.body)
   json.each do |item|
     expect(item['value']).to eq 3
-    expect(item['ratable_type']).to eq 'jukebox_song'
+    expect(item['ratable_type']).to eq 'song'
     expect(item['user_id']).to eq 2
   end
 end

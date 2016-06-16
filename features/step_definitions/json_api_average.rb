@@ -17,11 +17,11 @@ Given(/^a set of ratings for several songs$/) do
   6.times { |i| create :song_rating, value: i+1, ratable_id: 3 }
 end
 
-When(/^I ask for those song's average ratings$/) do
+When(/^I ask for those songs' average ratings$/) do
   visit '/api/v1/ratables/jukebox_song/1,2,3'
 end
 
-Then(/^I should get those song's average ratings$/) do
+Then(/^I should get those songs' average ratings$/) do
   json = JSON.parse(page.body)
   json.each do |item|
     expect(item['average']).to eq '3.5'

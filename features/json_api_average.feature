@@ -7,8 +7,8 @@ Feature: JSON API Averages
 
   Scenario: Fetch several averages
     Given a set of ratings for several songs
-    When I ask for those song's average ratings
-    Then I should get those song's average ratings
+    When I ask for those songs' average ratings
+    Then I should get those songs' average ratings
 
   Scenario: Save a new rating
     When I post a rating to the API
@@ -26,5 +26,5 @@ Feature: JSON API Averages
 
   Scenario: Fetch one rating for a user
     Given an existing rating
-    When I request that user's rating for a song
+    When I request a user's rating for that song
     Then I get the rating information for that song

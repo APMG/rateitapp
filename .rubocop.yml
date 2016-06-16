@@ -4,8 +4,8 @@ AllCops:
   DisplayStyleGuide: true
   TargetRubyVersion: 2.3
 
-# Rails:
-#   Enabled: true
+Rails:
+  Enabled: true
 
 # We have better monitors these days.
 Metrics/LineLength:

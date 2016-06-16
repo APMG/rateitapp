@@ -7,4 +7,3 @@ before_script:
 language: ruby
 rvm:
   - 2.3.0
-script: bin/rspec && bin/cucumber

@@ -17,11 +17,11 @@ Given(/^a set of ratings for several songs$/) do
   6.times { |i| create :song_rating, value: i+1, ratable_id: 3 }
 end
 
-When(/^I ask for those song's average ratings$/) do
+When(/^I ask for those songs' average ratings$/) do
   visit '/api/v1/ratables/jukebox_song/1,2,3'
 end
 
-Then(/^I should get those song's average ratings$/) do
+Then(/^I should get those songs' average ratings$/) do
   json = JSON.parse(page.body)
   json.each do |item|
     expect(item['average']).to eq '3.5'
@@ -55,4 +55,34 @@ Then(/^the existing record is updated in the database$/) do
   expect(rating).to_not be_nil
   expect(rating.value).to eq 2
   expect(rating.ratable_id).to eq '11'
+end
+
+When(/^I request a user's rating for that song$/) do
+  visit '/users/2/ratings/jukebox_song/11'
+end
+
+Then(/^I get the rating information for that song$/) do
+  json = JSON.parse(page.body)
+
+  expect(json.first['value']).to eq 5
+  expect(json.first['ratable_type']).to eq 'jukebox_song'
+  expect(json.first['ratable_id']).to eq '11'
+  expect(json.first['user_id']).to eq 2
+end
+
+Given(/^several existing ratings$/) do
+  3.times { |i| create :song_rating, value: 3, ratable_id: i+1, user_id: 2 }
+end
+
+When(/^I request a user's ratings for those songs$/) do
+  visit '/users/2/ratings/jukebox_song/1,2,3'
+end
+
+Then(/^I get the rating information for those songs$/) do
+  json = JSON.parse(page.body)
+  json.each do |item|
+    expect(item['value']).to eq 3
+    expect(item['ratable_type']).to eq 'jukebox_song'
+    expect(item['user_id']).to eq 2
+  end
 end

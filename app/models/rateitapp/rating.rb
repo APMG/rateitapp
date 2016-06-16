@@ -13,5 +13,9 @@
 
 module Rateitapp
   class Rating < ActiveRecord::Base
+    validates :value, presence: true
+    validates :ratable_type, presence: true
+    validates :ratable_id, presence: true
+    validates :user_id, presence: true
   end
 end

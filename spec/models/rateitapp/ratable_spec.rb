@@ -43,6 +43,12 @@ module Rateitapp
       subject { ratable.average }
 
       it { is_expected.to eq 3.5 }
+
+      # Rails encodes BigDecimal as a JSON string to avoid precision loss when
+      # poorly behaved clients convert to float. Given the nature of this value,
+      # the precision is superfluous and the string is annoying. So make this a
+      # float.
+      it { is_expected.to be_instance_of Float }
     end
   end
 end

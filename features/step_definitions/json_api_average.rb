@@ -56,3 +56,13 @@ Then(/^the existing record is updated in the database$/) do
   expect(rating.value).to eq 2
   expect(rating.ratable_id).to eq '11'
 end
+
+When(/^I request a user's rating for that song$/) do
+  visit '/users/2/ratings/jukebox_song/11'
+end
+
+Then(/^I get the rating information for that song$/) do
+  json = JSON.parse(page.body)
+  p json.inspect
+  expect(json['value']).to eq 5
+end

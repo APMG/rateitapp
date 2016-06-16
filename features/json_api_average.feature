@@ -33,3 +33,8 @@ Feature: JSON API Averages
     Given several existing ratings
     When I request a user's ratings for those songs
     Then I get the rating information for those songs
+
+  Scenario: Fetch all ratings for a ratable type
+    Given a set of ratings for several ratable types
+    When I request all of a user's ratings from a ratable type
+    Then I get the ratings information for that ratable type

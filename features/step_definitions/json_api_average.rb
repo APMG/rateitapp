@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 Given(/^a set of ratings for one song$/) do
   6.times { create :rating, ratable_type: 'jukebox_song', ratable_id: 11 }
 end
@@ -36,6 +37,10 @@ end
 
 When(/^I post that same rating to the API$/) do
   post '/users/2/ratings', value: 2, ratable_type: 'jukebox_song', ratable_id: 11, user_id: 2
+end
+
+When(/^I post an invalid rating to the API$/) do
+  post '/users/2/ratings', value: 2, ratable_type: '', ratable_id: 11, user_id: 2
 end
 
 When(/^I request a user's rating for that song$/) do
@@ -79,6 +84,16 @@ Then(/^the existing record is updated in the database$/) do
   expect(rating).to_not be_nil
   expect(rating.value).to eq 2
   expect(rating.ratable_id).to eq '11'
+end
+
+Then(/^there is nothing in the database$/) do
+  expect(Rateitapp::Rating.count).to eq 0
+end
+
+Then(/^I get an invalid rating error$/) do
+  json = JSON.parse(last_response.body)
+
+  expect(json['error']).to eq true
 end
 
 Then(/^I get the rating information for that song$/) do

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class MakeFieldsNotNull < ActiveRecord::Migration
   def change
     change_column_null :rateitapp_ratings, :value, false

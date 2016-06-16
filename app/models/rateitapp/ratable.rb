@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Rateitapp
   class Ratable
     attr_reader :type, :id
@@ -18,6 +19,6 @@ module Rateitapp
     private
 
     # ActiveModelSerializers change.
-    alias :read_attribute_for_serialization :public_send
+    alias read_attribute_for_serialization public_send
   end
 end

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'rails_helper'
 
 module Rateitapp
@@ -21,7 +22,7 @@ module Rateitapp
     describe '#count' do
       before :each do
         5.times do |i|
-          create :rating, ratable_type: 'jukebox_song', ratable_id: 1234, value: i+1
+          create :rating, ratable_type: 'jukebox_song', ratable_id: 1234, value: i + 1
         end
         create :rating, ratable_type: 'jukebox_stuff', ratable_id: 1235, value: 1
       end
@@ -34,7 +35,7 @@ module Rateitapp
     describe '#average' do
       before :each do
         6.times do |i|
-          create :rating, ratable_type: 'jukebox_song', ratable_id: 1234, value: i+1
+          create :rating, ratable_type: 'jukebox_song', ratable_id: 1234, value: i + 1
         end
         create :rating, ratable_type: 'jukebox_stuff', ratable_id: 1235, value: 1
       end

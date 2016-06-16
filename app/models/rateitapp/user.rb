@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Rateitapp
   class User
     attr_reader :id

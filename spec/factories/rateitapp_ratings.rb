@@ -15,7 +15,7 @@ FactoryGirl.define do
   factory :rateitapp_rating, class: 'Rateitapp::Rating' do
     factory :rating do
       sequence(:user_id) { |i| i }
-      sequence(:ratable_type) { |i| "#thing_type_{i}" }
+      sequence(:ratable_type) { |i| "thing_type_#{ i }" }
       sequence(:ratable_id) { |i| i }
 
       value 3

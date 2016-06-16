@@ -19,7 +19,7 @@ Given(/^a set of ratings for several songs$/) do
 end
 
 When(/^I ask for those songs' average ratings$/) do
-  visit '/api/v1/ratables/jukebox_song/1,2,3'
+  visit '/ratables/jukebox_song/1,2,3'
 end
 
 Then(/^I should get those songs' average ratings$/) do
@@ -30,7 +30,7 @@ Then(/^I should get those songs' average ratings$/) do
 end
 
 Given(/^I post a rating to the API$/) do
-  post '/api/v1/ratings', value: 4, ratable_type: 'jukebox_song', ratable_id: 47, user_id: 2
+  post '/users/2/ratings', value: 4, ratable_type: 'jukebox_song', ratable_id: 47, user_id: 2
 end
 
 Then(/^it is saved in the database$/) do
@@ -46,7 +46,7 @@ Given(/^an existing rating$/) do
 end
 
 When(/^I post that same rating to the API$/) do
-  post '/api/v1/ratings', value: 2, ratable_type: 'jukebox_song', ratable_id: 11, user_id: 2
+  post '/users/2/ratings', value: 2, ratable_type: 'jukebox_song', ratable_id: 11, user_id: 2
 end
 
 Then(/^the existing record is updated in the database$/) do

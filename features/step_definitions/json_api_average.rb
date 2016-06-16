@@ -29,11 +29,11 @@ Given(/^a set of ratings for several ratable types$/) do
 end
 
 When(/^I ask for the composite rating for that song$/) do
-  visit '/ratables/song/11'
+  get '/ratables/song/11'
 end
 
 When(/^I ask for those songs' ratings$/) do
-  visit '/ratables/song/1,2,3'
+  get '/ratables/song/1,2,3'
 end
 
 When(/^I post a rating to the API$/) do
@@ -49,15 +49,15 @@ When(/^I post an invalid rating to the API$/) do
 end
 
 When(/^I request a user's rating for that song$/) do
-  visit '/users/2/ratings/song/11'
+  get '/users/2/ratings/song/11'
 end
 
 When(/^I request a user's ratings for those songs$/) do
-  visit '/users/2/ratings/song/1,2,3'
+  get '/users/2/ratings/song/1,2,3'
 end
 
 When(/^I request all of a user's ratings from a ratable type$/) do
-  visit '/users/2/ratings/thing_type_2'
+  get '/users/2/ratings/thing_type_2'
 end
 
 When(/^I post a rating to the API with an invalid type$/) do
@@ -65,13 +65,13 @@ When(/^I post a rating to the API with an invalid type$/) do
 end
 
 Then(/^I should get that song's rating information$/) do
-  json = JSON.parse(page.body)
+  json = JSON.parse(last_response.body)
   expect(json.first['average']).to eq 3.0
   expect(json.first['count']).to eq 6
 end
 
 Then(/^I should get those songs' ratings information$/) do
-  json = JSON.parse(page.body)
+  json = JSON.parse(last_response.body)
   json.each do |item|
     expect(item['average']).to eq 3.5
     expect(item['count']).to eq 6
@@ -106,7 +106,7 @@ Then(/^I get an invalid rating error$/) do
 end
 
 Then(/^I get the rating information for that song$/) do
-  json = JSON.parse(page.body)
+  json = JSON.parse(last_response.body)
 
   expect(json.first['value']).to eq 5
   expect(json.first['ratable_type']).to eq 'song'
@@ -115,7 +115,7 @@ Then(/^I get the rating information for that song$/) do
 end
 
 Then(/^I get the rating information for those songs$/) do
-  json = JSON.parse(page.body)
+  json = JSON.parse(last_response.body)
   json.each do |item|
     expect(item['value']).to eq 3
     expect(item['ratable_type']).to eq 'song'
@@ -124,7 +124,7 @@ Then(/^I get the rating information for those songs$/) do
 end
 
 Then(/^I get the ratings information for that ratable type$/) do
-  json = JSON.parse(page.body)
+  json = JSON.parse(last_response.body)
 
   expect(json.count).to eq 4
   expect(json.first['ratable_type']).to eq 'thing_type_2'

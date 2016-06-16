@@ -1,15 +1,5 @@
-# frozen_string_literal: true
 Given(/^a set of ratings for one song$/) do
   6.times { create :rating, ratable_type: 'jukebox_song', ratable_id: 11 }
-end
-
-When(/^I ask for that song's average rating$/) do
-  visit '/ratables/jukebox_song/11'
-end
-
-Then(/^I should get that song's average rating$/) do
-  json = JSON.parse(page.body)
-  expect(json.first['average']).to eq 3.0
 end
 
 Given(/^a set of ratings for several songs$/) do
@@ -18,19 +8,60 @@ Given(/^a set of ratings for several songs$/) do
   6.times { |i| create :song_rating, value: i + 1, ratable_id: 3 }
 end
 
-When(/^I ask for those songs' average ratings$/) do
-  visit '/ratables/jukebox_song/1,2,3'
+Given(/^I post a rating to the API$/) do
+  post '/users/2/ratings', value: 4, ratable_type: 'jukebox_song', ratable_id: 47, user_id: 2
 end
 
-Then(/^I should get those songs' average ratings$/) do
-  json = JSON.parse(page.body)
-  json.each do |item|
-    expect(item['average']).to eq 3.5
+Given(/^an existing rating$/) do
+  create :song_rating, value: 5, ratable_id: 11, user_id: 2
+end
+
+Given(/^several existing ratings$/) do
+  3.times { |i| create :song_rating, value: 3, ratable_id: i + 1, user_id: 2 }
+end
+
+Given(/^a set of ratings for several ratable types$/) do
+  3.times do |i|
+    4.times { create :rating, ratable_type: "thing_type_#{i}", user_id: 2 }
   end
 end
 
-Given(/^I post a rating to the API$/) do
-  post '/users/2/ratings', value: 4, ratable_type: 'jukebox_song', ratable_id: 47, user_id: 2
+When(/^I ask for the composite rating for that song$/) do
+  visit '/ratables/jukebox_song/11'
+end
+
+When(/^I ask for those songs' ratings$/) do
+  visit '/ratables/jukebox_song/1,2,3'
+end
+
+When(/^I post that same rating to the API$/) do
+  post '/users/2/ratings', value: 2, ratable_type: 'jukebox_song', ratable_id: 11, user_id: 2
+end
+
+When(/^I request a user's rating for that song$/) do
+  visit '/users/2/ratings/jukebox_song/11'
+end
+
+When(/^I request a user's ratings for those songs$/) do
+  visit '/users/2/ratings/jukebox_song/1,2,3'
+end
+
+When(/^I request all of a user's ratings from a ratable type$/) do
+  visit '/users/2/ratings/thing_type_2'
+end
+
+Then(/^I should get that song's rating information$/) do
+  json = JSON.parse(page.body)
+  expect(json.first['average']).to eq 3.0
+  expect(json.first['count']).to eq 6
+end
+
+Then(/^I should get those songs' ratings information$/) do
+  json = JSON.parse(page.body)
+  json.each do |item|
+    expect(item['average']).to eq 3.5
+    expect(item['count']).to eq 6
+  end
 end
 
 Then(/^it is saved in the database$/) do
@@ -39,14 +70,6 @@ Then(/^it is saved in the database$/) do
   expect(rating).to_not be_nil
   expect(rating.value).to eq 4
   expect(rating.ratable_id).to eq '47'
-end
-
-Given(/^an existing rating$/) do
-  create :song_rating, value: 5, ratable_id: 11, user_id: 2
-end
-
-When(/^I post that same rating to the API$/) do
-  post '/users/2/ratings', value: 2, ratable_type: 'jukebox_song', ratable_id: 11, user_id: 2
 end
 
 Then(/^the existing record is updated in the database$/) do
@@ -58,10 +81,6 @@ Then(/^the existing record is updated in the database$/) do
   expect(rating.ratable_id).to eq '11'
 end
 
-When(/^I request a user's rating for that song$/) do
-  visit '/users/2/ratings/jukebox_song/11'
-end
-
 Then(/^I get the rating information for that song$/) do
   json = JSON.parse(page.body)
 
@@ -71,14 +90,6 @@ Then(/^I get the rating information for that song$/) do
   expect(json.first['user_id']).to eq 2
 end
 
-Given(/^several existing ratings$/) do
-  3.times { |i| create :song_rating, value: 3, ratable_id: i + 1, user_id: 2 }
-end
-
-When(/^I request a user's ratings for those songs$/) do
-  visit '/users/2/ratings/jukebox_song/1,2,3'
-end
-
 Then(/^I get the rating information for those songs$/) do
   json = JSON.parse(page.body)
   json.each do |item|
@@ -86,16 +97,6 @@ Then(/^I get the rating information for those songs$/) do
     expect(item['ratable_type']).to eq 'jukebox_song'
     expect(item['user_id']).to eq 2
   end
-end
-
-Given(/^a set of ratings for several ratable types$/) do
-  3.times do |i|
-    4.times { create :rating, ratable_type: "thing_type_#{i}", user_id: 2 }
-  end
-end
-
-When(/^I request all of a user's ratings from a ratable type$/) do
-  visit '/users/2/ratings/thing_type_2'
 end
 
 Then(/^I get the ratings information for that ratable type$/) do

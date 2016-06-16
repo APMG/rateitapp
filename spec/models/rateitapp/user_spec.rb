@@ -32,7 +32,7 @@ module Rateitapp
       end
 
       it 'allows additional parameters' do
-        expect(subject.where(ratable_type: 'jukebox_song').count).to eq 4
+        expect(subject.where(ratable_type: 'song').count).to eq 4
       end
     end
   end

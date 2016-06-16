@@ -24,10 +24,10 @@ module Rateitapp
       rating = Rating.find_or_initialize_by(ratable_type: params[:ratable_type], ratable_id: params[:ratable_id], user_id: params[:user_id])
       rating.value = params[:value]
 
-      if rating.save
+      if Rateitapp.plugin_manager.valid?(rating) && rating.save
         render json: { error: false }
       else
-        render json: { error: true }
+        render json: { error: true }, status: 400
       end
     end
 

@@ -22,7 +22,7 @@ FactoryGirl.define do
       value 3
 
       factory :song_rating do
-        ratable_type 'jukebox_song'
+        ratable_type 'song'
       end
     end
   end

@@ -11,11 +11,18 @@ Feature: JSON API Averages
     Then I should get those songs' ratings information
 
   Scenario: Save a new rating
+    Given a song plugin
     When I post a rating to the API
     Then it is saved in the database
 
+  Scenario: Attempt to save an invalid rating
+    Given a song plugin
+    When I post a rating to the API with an invalid type
+    Then it returns an error
+
   Scenario: Update an existing rating
-    Given an existing rating
+    Given a song plugin
+      And an existing rating
     When I post that same rating to the API
     Then the existing record is updated in the database
 

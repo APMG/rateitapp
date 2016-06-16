@@ -4,16 +4,6 @@ Given(/^a song plugin$/) do
   Rateitapp.plugin_manager.add song_plugin
 end
 
-When(/^I post a rating to the API with an invalid type$/) do
-  post '/users/2/ratings', value: 4, ratable_type: 'not_a_song', ratable_id: 47, user_id: 2
-end
-
-Then(/^it returns an error$/) do
-  expect(last_response.status).to eq 400
-  json = JSON.parse(last_response.body)
-  expect(json['error']).to eq true
-end
-
 Given(/^a set of ratings for one song$/) do
   6.times { create :rating, ratable_type: 'song', ratable_id: 11 }
 end
@@ -22,10 +12,6 @@ Given(/^a set of ratings for several songs$/) do
   6.times { |i| create :song_rating, value: i + 1, ratable_id: 1 }
   6.times { |i| create :song_rating, value: i + 1, ratable_id: 2 }
   6.times { |i| create :song_rating, value: i + 1, ratable_id: 3 }
-end
-
-Given(/^I post a rating to the API$/) do
-  post '/users/2/ratings', value: 4, ratable_type: 'song', ratable_id: 47, user_id: 2
 end
 
 Given(/^an existing rating$/) do
@@ -50,12 +36,16 @@ When(/^I ask for those songs' ratings$/) do
   visit '/ratables/song/1,2,3'
 end
 
+When(/^I post a rating to the API$/) do
+  post '/users/2/ratings', value: 4, ratable_type: 'song', ratable_id: 47
+end
+
 When(/^I post that same rating to the API$/) do
-  post '/users/2/ratings', value: 2, ratable_type: 'song', ratable_id: 11, user_id: 2
+  post '/users/2/ratings', value: 2, ratable_type: 'song', ratable_id: 11
 end
 
 When(/^I post an invalid rating to the API$/) do
-  post '/users/2/ratings', value: 2, ratable_type: '', ratable_id: 11, user_id: 2
+  post '/users/2/ratings', value: 2, ratable_type: '', ratable_id: 11
 end
 
 When(/^I request a user's rating for that song$/) do
@@ -68,6 +58,10 @@ end
 
 When(/^I request all of a user's ratings from a ratable type$/) do
   visit '/users/2/ratings/thing_type_2'
+end
+
+When(/^I post a rating to the API with an invalid type$/) do
+  post '/users/2/ratings', value: 4, ratable_type: 'not_a_song', ratable_id: 47
 end
 
 Then(/^I should get that song's rating information$/) do
@@ -135,4 +129,10 @@ Then(/^I get the ratings information for that ratable type$/) do
   expect(json.count).to eq 4
   expect(json.first['ratable_type']).to eq 'thing_type_2'
   expect(json.first['user_id']).to eq 2
+end
+
+Then(/^it returns an error$/) do
+  expect(last_response.status).to eq 400
+  json = JSON.parse(last_response.body)
+  expect(json['error']).to eq true
 end

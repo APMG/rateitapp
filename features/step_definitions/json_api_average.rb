@@ -1,14 +1,14 @@
 Given(/^a set of ratings for one song$/) do
-  6.times { |i| create :song_rating, value: i+1, ratable_id: 4 }
+  6.times { |i| create :rating, ratable_type: 'jukebox_song', ratable_id: 11 }
 end
 
 When(/^I ask for that song's average rating$/) do
-  visit '/api/v1/ratables/jukebox_song/4'
+  visit '/ratables/jukebox_song/11'
 end
 
 Then(/^I should get that song's average rating$/) do
   json = JSON.parse(page.body)
-  expect(json.first['average']).to eq '3.5'
+  expect(json.first['average']).to eq '3.0'
 end
 
 Given(/^a set of ratings for several songs$/) do

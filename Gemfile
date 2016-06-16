@@ -13,3 +13,7 @@ gemspec
 # To use a debugger
 # gem 'byebug', group: [:development, :test]
 
+group :development do
+  # Mark up the models and such with database info.
+  gem 'annotate'
+end

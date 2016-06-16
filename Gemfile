@@ -17,3 +17,19 @@ group :development do
   # Mark up the models and such with database info.
   gem 'annotate'
 end
+
+group :test do
+  gem 'cucumber-rails', require: false
+  gem 'database_cleaner'
+end
+
+group :test, :development do
+  gem 'rspec'
+  gem 'rspec-rails'
+  gem 'factory_girl_rails'
+  gem 'capybara'
+
+  gem 'rubocop'
+  gem 'pry'
+  gem 'pry-byebug'
+end

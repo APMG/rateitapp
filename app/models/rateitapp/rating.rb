@@ -13,6 +13,7 @@
 #
 
 module Rateitapp
+  # A rating uniquely identified by a user and ratable.
   class Rating < ActiveRecord::Base
     validates :value, presence: true
     validates :ratable_type, presence: true

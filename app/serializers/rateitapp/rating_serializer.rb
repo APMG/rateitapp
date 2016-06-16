@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 module Rateitapp
+  # The serializer for a rating.
   class RatingSerializer < ActiveModel::Serializer
     attributes :value
     attributes :ratable_type

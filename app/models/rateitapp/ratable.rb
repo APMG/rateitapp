@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 module Rateitapp
+  # The thing being rated.
   class Ratable
     attr_reader :type, :id
 
@@ -15,8 +16,6 @@ module Rateitapp
     def count
       Rating.where(ratable_type: @type, ratable_id: @id).count
     end
-
-    private
 
     # ActiveModelSerializers change.
     alias read_attribute_for_serialization public_send

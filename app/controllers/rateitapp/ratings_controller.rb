@@ -2,6 +2,7 @@
 require_dependency 'rateitapp/application_controller'
 
 module Rateitapp
+  # Controller for actions involving ratings.
   class RatingsController < ApplicationController
     def index
       render json: {}

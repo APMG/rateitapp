@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 Given(/^a set of ratings for one song$/) do
-  6.times { |i| create :rating, ratable_type: 'jukebox_song', ratable_id: 11 }
+  6.times { create :rating, ratable_type: 'jukebox_song', ratable_id: 11 }
 end
 
 When(/^I ask for that song's average rating$/) do
@@ -90,7 +90,7 @@ end
 
 Given(/^a set of ratings for several ratable types$/) do
   3.times do |i|
-    4.times { |t| create :rating, ratable_type: "thing_type_#{ i }", user_id: 2 }
+    4.times { create :rating, ratable_type: "thing_type_#{ i }", user_id: 2 }
   end
 end
 

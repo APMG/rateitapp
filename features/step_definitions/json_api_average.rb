@@ -90,7 +90,7 @@ end
 
 Given(/^a set of ratings for several ratable types$/) do
   3.times do |i|
-    4.times { create :rating, ratable_type: "thing_type_#{ i }", user_id: 2 }
+    4.times { create :rating, ratable_type: "thing_type_#{i}", user_id: 2 }
   end
 end
 

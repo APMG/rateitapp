@@ -9,7 +9,7 @@ end
 
 Then(/^I should get that song's average rating$/) do
   json = JSON.parse(page.body)
-  expect(json.first['average']).to eq '3.0'
+  expect(json.first['average']).to eq 3.0
 end
 
 Given(/^a set of ratings for several songs$/) do
@@ -25,7 +25,7 @@ end
 Then(/^I should get those songs' average ratings$/) do
   json = JSON.parse(page.body)
   json.each do |item|
-    expect(item['average']).to eq '3.5'
+    expect(item['average']).to eq 3.5
   end
 end
 

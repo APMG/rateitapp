@@ -10,7 +10,7 @@ module Rateitapp
     end
 
     def average
-      Rating.where(ratable_type: @type, ratable_id: @id).average(:value)
+      Rating.where(ratable_type: @type, ratable_id: @id).average(:value).to_f
     end
 
     def count

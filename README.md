@@ -1,6 +1,6 @@
 # Welcome to the RateIt App
 
-[![Build Status](https://travis-ci.org/APMG/rateitapp.svg?branch=master" alt="Build Status" /> https://travis-ci.org/APMG/rateitapp)
+[![Build Status](https://travis-ci.org/APMG/rateitapp.svg?branch=master)](https://travis-ci.org/APMG/rateitapp)
 
 This project rocks and uses MIT-LICENSE.
 

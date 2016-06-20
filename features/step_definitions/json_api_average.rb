@@ -32,6 +32,10 @@ Given(/^300 ratings$/) do
   300.times { create :song_rating, value: 3, user_id: 2 }
 end
 
+When(/^I DELETE that rating$/) do
+  delete '/users/2/ratings/song/11'
+end
+
 When(/^I ask for the composite rating for that song$/) do
   get '/ratables/song/11'
 end
@@ -70,6 +74,18 @@ end
 
 When(/^I ask for too many ratings$/) do
   get '/users/2/ratings/song?per_page=275'
+end
+
+Then(/^I am told that the rating is deleted$/) do
+  expect(last_response.status).to eq 204
+end
+
+Then(/^it is no longer in the database$/) do
+  expect(Rateitapp::Rating).to_not be_any
+end
+
+Then(/^I get a 404$/) do
+  expect(last_response.status).to eq 404
 end
 
 Then(/^I should get that song's rating information$/) do

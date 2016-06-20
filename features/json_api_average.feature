@@ -28,6 +28,16 @@ Feature: JSON API Averages
     Then I get the rating back in the response
       And the existing record is updated in the database
 
+  Scenario: Delete an existing rating
+    Given an existing rating
+    When I DELETE that rating
+    Then I am told that the rating is deleted
+      And it is no longer in the database
+
+  Scenario: Attempt to delete a non-existent rating
+    When I DELETE that rating
+    Then I get a 404
+
   Scenario: Return error on invalid rating
     When I post an invalid rating to the API
     Then I get an invalid rating error

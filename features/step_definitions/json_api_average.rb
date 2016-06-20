@@ -73,16 +73,16 @@ When(/^I ask for too many ratings$/) do
 end
 
 Then(/^I should get that song's rating information$/) do
-  json = JSON.parse(last_response.body)
-  expect(json.first['average']).to eq 3.0
-  expect(json.first['count']).to eq 6
+  json = JSON.parse(last_response.body)['data']
+  expect(json.first['attributes']['average']).to eq 3.0
+  expect(json.first['attributes']['count']).to eq 6
 end
 
 Then(/^I should get those songs' ratings information$/) do
-  json = JSON.parse(last_response.body)
+  json = JSON.parse(last_response.body)['data']
   json.each do |item|
-    expect(item['average']).to eq 3.5
-    expect(item['count']).to eq 6
+    expect(item['attributes']['average']).to eq 3.5
+    expect(item['attributes']['count']).to eq 6
   end
 end
 
@@ -114,29 +114,29 @@ Then(/^I get an invalid rating error$/) do
 end
 
 Then(/^I get the rating information for that song$/) do
-  json = JSON.parse(last_response.body)
+  json = JSON.parse(last_response.body)['data']
 
-  expect(json.first['value']).to eq 5
-  expect(json.first['ratable_type']).to eq 'song'
-  expect(json.first['ratable_id']).to eq '11'
-  expect(json.first['user_id']).to eq '2'
+  expect(json.first['attributes']['value']).to eq 5
+  expect(json.first['attributes']['ratable-type']).to eq 'song'
+  expect(json.first['attributes']['ratable-id']).to eq '11'
+  expect(json.first['attributes']['user-id']).to eq '2'
 end
 
 Then(/^I get the rating information for those songs$/) do
-  json = JSON.parse(last_response.body)
+  json = JSON.parse(last_response.body)['data']
   json.each do |item|
-    expect(item['value']).to eq 3
-    expect(item['ratable_type']).to eq 'song'
-    expect(item['user_id']).to eq '2'
+    expect(item['attributes']['value']).to eq 3
+    expect(item['attributes']['ratable-type']).to eq 'song'
+    expect(item['attributes']['user-id']).to eq '2'
   end
 end
 
 Then(/^I get the ratings information for that ratable type$/) do
-  json = JSON.parse(last_response.body)
+  json = JSON.parse(last_response.body)['data']
 
   expect(json.count).to eq 4
-  expect(json.first['ratable_type']).to eq 'thing_type_2'
-  expect(json.first['user_id']).to eq '2'
+  expect(json.first['attributes']['ratable-type']).to eq 'thing_type_2'
+  expect(json.first['attributes']['user-id']).to eq '2'
 end
 
 Then(/^it returns an error$/) do
@@ -146,6 +146,6 @@ Then(/^it returns an error$/) do
 end
 
 Then(/^I get the default number of ratings back$/) do
-  json = JSON.parse(last_response.body)
+  json = JSON.parse(last_response.body)['data']
   expect(json.count).to eq 250
 end

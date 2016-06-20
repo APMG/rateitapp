@@ -2,6 +2,8 @@
 module Rateitapp
   # The thing being rated.
   class Ratable
+    include ActiveModel::Model
+
     attr_reader :type, :id
 
     def initialize(type, id)

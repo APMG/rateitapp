@@ -8,8 +8,8 @@ module Rateitapp
       ratings = Rating.where(ratable_type: params[:ratable_type], user_id: params[:user_id])
                       .page(params[:page]).per(params[:per_page])
 
-      serialization = ActiveModelSerializers::SerializableResource.new(ratings)
-      render json: serialization.to_json
+      # serialization = ActiveModelSerializers::SerializableResource.new()
+      render json: ratings
     end
 
     def show

@@ -114,6 +114,10 @@ Then(/^I get an invalid rating error$/) do
   expect(json['errors'].size).to eq 1
 end
 
+Then(/^it returns a creation status code$/) do
+  expect(last_response.status).to eq 201
+end
+
 Then(/^I get the rating back in the response$/) do
   json = JSON.parse(last_response.body)['data']
 

@@ -14,6 +14,7 @@ Feature: JSON API Averages
     Given a song plugin
     When I post a rating to the API
     Then it is saved in the database
+      And it returns a creation status code
 
   Scenario: Attempt to save an invalid rating
     Given a song plugin

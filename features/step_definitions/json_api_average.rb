@@ -124,7 +124,7 @@ Then(/^I get the rating back in the response$/) do
   expect(json['attributes']['value']).to eq 2
   expect(json['attributes']['ratable-type']).to eq 'song'
   expect(json['attributes']['ratable-id']).to eq '11'
-  expect(json['attributes']['user-id']).to eq 2
+  expect(json['attributes']['user-id']).to eq '2'
 end
 
 Then(/^I get the rating information for that song$/) do

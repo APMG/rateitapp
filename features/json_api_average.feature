@@ -4,7 +4,6 @@ Feature: JSON API Averages
     Given a set of ratings for one song
     When I ask for the composite rating for that song
     Then I should get that song's rating information
-      And It has the JSON API media type
 
   Scenario: Fetch ratings for several songs
     Given a set of ratings for several songs

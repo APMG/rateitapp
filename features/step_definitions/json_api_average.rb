@@ -110,7 +110,17 @@ end
 Then(/^I get an invalid rating error$/) do
   json = JSON.parse(last_response.body)
 
-  expect(json['error']).to eq true
+  expect(json['errors']).to include('source' => { 'pointer' => '/data/attributes/ratable-type' }, 'detail' => 'is not recognized')
+  expect(json['errors'].size).to eq 1
+end
+
+Then(/^I get the rating back in the response$/) do
+  json = JSON.parse(last_response.body)['data']
+
+  expect(json['attributes']['value']).to eq 2
+  expect(json['attributes']['ratable-type']).to eq 'song'
+  expect(json['attributes']['ratable-id']).to eq '11'
+  expect(json['attributes']['user-id']).to eq 2
 end
 
 Then(/^I get the rating information for that song$/) do
@@ -142,7 +152,8 @@ end
 Then(/^it returns an error$/) do
   expect(last_response.status).to eq 400
   json = JSON.parse(last_response.body)
-  expect(json['error']).to eq true
+  expect(json['errors']).to include('source' => { 'pointer' => '/data/attributes/ratable-type' }, 'detail' => 'is not recognized')
+  expect(json['errors'].size).to eq 1
 end
 
 Then(/^I get the default number of ratings back$/) do

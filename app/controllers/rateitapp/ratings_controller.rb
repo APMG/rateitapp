@@ -26,9 +26,9 @@ module Rateitapp
       rating.value = params[:value]
 
       if Rateitapp.plugin_manager.valid?(rating) && rating.save
-        render json: { error: false }
+        render json: rating
       else
-        render json: { error: true }, status: 400
+        render json: rating, status: 400, serializer: ActiveModel::Serializer::ErrorSerializer
       end
     end
 

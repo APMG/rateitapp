@@ -149,3 +149,7 @@ Then(/^I get the default number of ratings back$/) do
   json = JSON.parse(last_response.body)['data']
   expect(json.count).to eq 250
 end
+
+Then(/^It has the JSON API media type$/) do
+  expect(last_response['Content-Type']).to eq 'application/vnd.api+json; charset=utf-8'
+end

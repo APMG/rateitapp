@@ -136,3 +136,16 @@ Then(/^it returns an error$/) do
   json = JSON.parse(last_response.body)
   expect(json['error']).to eq true
 end
+
+Given(/^300 ratings$/) do
+  300.times { create :song_rating, value: 3, user_id: 2 }
+end
+
+When(/^I ask for too many ratings$/) do
+  get '/users/2/ratings/song?per_page=275'
+end
+
+Then(/^I get the default number of ratings back$/) do
+  json = JSON.parse(last_response.body)
+  expect(json.count).to eq 250
+end

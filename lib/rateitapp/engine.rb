@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 require 'active_model_serializers'
+require 'kaminari'
 
 module Rateitapp
   # The base Engine.

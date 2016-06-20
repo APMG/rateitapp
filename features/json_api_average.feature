@@ -45,3 +45,8 @@ Feature: JSON API Averages
     Given a set of ratings for several ratable types
     When I request all of a user's ratings from a ratable type
     Then I get the ratings information for that ratable type
+
+  Scenario: Paginate all of a user's ratings
+    Given 300 ratings
+    When I ask for too many ratings
+    Then I get the default number of ratings back

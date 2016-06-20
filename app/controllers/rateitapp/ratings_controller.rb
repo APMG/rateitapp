@@ -6,6 +6,7 @@ module Rateitapp
   class RatingsController < ApplicationController
     def index
       ratings = Rating.where(ratable_type: params[:ratable_type], user_id: params[:user_id])
+                      .page(params[:page]).per(params[:per_page])
 
       serialization = ActiveModelSerializers::SerializableResource.new(ratings)
       render json: serialization.to_json
@@ -35,6 +36,10 @@ module Rateitapp
 
     def rating_params
       params.permit(:user_id, :ratable_type, :ratable_id)
+    end
+
+    def per_page
+      params[:per_page]
     end
   end
 end

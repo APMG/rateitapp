@@ -17,6 +17,9 @@ gemspec
 group :development do
   # Mark up the models and such with database info.
   gem 'annotate'
+
+  # Security static analysis
+  gem 'brakeman'
 end
 
 group :test do

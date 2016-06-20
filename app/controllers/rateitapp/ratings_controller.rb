@@ -37,9 +37,5 @@ module Rateitapp
     def rating_params
       params.permit(:user_id, :ratable_type, :ratable_id)
     end
-
-    def per_page
-      params[:per_page]
-    end
   end
 end

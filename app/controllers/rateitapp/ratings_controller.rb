@@ -8,8 +8,7 @@ module Rateitapp
       ratings = Rating.where(ratable_type: params[:ratable_type], user_id: params[:user_id])
                       .page(params[:page]).per(params[:per_page])
 
-      serialization = ActiveModelSerializers::SerializableResource.new(ratings)
-      render json: serialization.to_json
+      render json: ratings
     end
 
     def show
@@ -26,9 +25,9 @@ module Rateitapp
       rating.value = params[:value]
 
       if Rateitapp.plugin_manager.valid?(rating) && rating.save
-        render json: { error: false }
+        render json: rating, status: 201
       else
-        render json: { error: true }, status: 400
+        render json: rating, status: 400, serializer: ActiveModel::Serializer::ErrorSerializer
       end
     end
 

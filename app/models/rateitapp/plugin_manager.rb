@@ -20,7 +20,9 @@ module Rateitapp
 
     def valid?(rating)
       plugin = plugin_by_name(rating.ratable_type)
-      plugin.valid?(rating)
+      plugin.valid?(rating).tap do |valid|
+        rating.errors.add(:base, 'unknown validation issue') unless valid || rating.errors.any?
+      end
     end
 
     # Null object pattern. Consumers don't care about nil, they care about
@@ -30,7 +32,9 @@ module Rateitapp
         'null_plugin'
       end
 
-      def valid?(_rating)
+      def valid?(rating)
+        rating.errors.add(:ratable_type, 'is not recognized')
+
         false
       end
     end

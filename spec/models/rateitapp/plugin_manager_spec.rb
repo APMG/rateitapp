@@ -64,6 +64,10 @@ module Rateitapp
         let(:ratable_type) { 'song' }
 
         it { is_expected.to eq true }
+        it 'has an empty errors array' do
+          subject
+          expect(rating.errors).to be_empty
+        end
       end
 
       context 'when the plugin exists and it is not valid' do

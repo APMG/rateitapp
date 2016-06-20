@@ -14,6 +14,7 @@ Feature: JSON API Averages
     Given a song plugin
     When I post a rating to the API
     Then it is saved in the database
+      And it returns a creation status code
 
   Scenario: Attempt to save an invalid rating
     Given a song plugin
@@ -24,7 +25,8 @@ Feature: JSON API Averages
     Given a song plugin
       And an existing rating
     When I post that same rating to the API
-    Then the existing record is updated in the database
+    Then I get the rating back in the response
+      And the existing record is updated in the database
 
   Scenario: Return error on invalid rating
     When I post an invalid rating to the API

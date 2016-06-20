@@ -20,8 +20,8 @@ module Rateitapp
 
     def valid?(rating)
       plugin = plugin_by_name(rating.ratable_type)
-      plugin.valid?(rating).tap do
-        rating.errors.add(:base, 'unknown validation issue') unless rating.errors.any?
+      plugin.valid?(rating).tap do |valid|
+        rating.errors.add(:base, 'unknown validation issue') unless valid || rating.errors.any?
       end
     end
 

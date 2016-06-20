@@ -28,6 +28,10 @@ Given(/^a set of ratings for several ratable types$/) do
   end
 end
 
+Given(/^300 ratings$/) do
+  300.times { create :song_rating, value: 3, user_id: 2 }
+end
+
 When(/^I ask for the composite rating for that song$/) do
   get '/ratables/song/11'
 end
@@ -62,6 +66,10 @@ end
 
 When(/^I post a rating to the API with an invalid type$/) do
   post '/users/2/ratings', value: 4, ratable_type: 'not_a_song', ratable_id: 47
+end
+
+When(/^I ask for too many ratings$/) do
+  get '/users/2/ratings/song?per_page=275'
 end
 
 Then(/^I should get that song's rating information$/) do
@@ -111,7 +119,7 @@ Then(/^I get the rating information for that song$/) do
   expect(json.first['value']).to eq 5
   expect(json.first['ratable_type']).to eq 'song'
   expect(json.first['ratable_id']).to eq '11'
-  expect(json.first['user_id']).to eq 2
+  expect(json.first['user_id']).to eq '2'
 end
 
 Then(/^I get the rating information for those songs$/) do
@@ -119,7 +127,7 @@ Then(/^I get the rating information for those songs$/) do
   json.each do |item|
     expect(item['value']).to eq 3
     expect(item['ratable_type']).to eq 'song'
-    expect(item['user_id']).to eq 2
+    expect(item['user_id']).to eq '2'
   end
 end
 
@@ -128,21 +136,13 @@ Then(/^I get the ratings information for that ratable type$/) do
 
   expect(json.count).to eq 4
   expect(json.first['ratable_type']).to eq 'thing_type_2'
-  expect(json.first['user_id']).to eq 2
+  expect(json.first['user_id']).to eq '2'
 end
 
 Then(/^it returns an error$/) do
   expect(last_response.status).to eq 400
   json = JSON.parse(last_response.body)
   expect(json['error']).to eq true
-end
-
-Given(/^300 ratings$/) do
-  300.times { create :song_rating, value: 3, user_id: 2 }
-end
-
-When(/^I ask for too many ratings$/) do
-  get '/users/2/ratings/song?per_page=275'
 end
 
 Then(/^I get the default number of ratings back$/) do

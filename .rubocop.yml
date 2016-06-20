@@ -3,6 +3,8 @@ AllCops:
   DisplayCopNames: true
   DisplayStyleGuide: true
   TargetRubyVersion: 2.3
+  Exclude:
+    - spec/dummy/db/schema.rb
 
 Rails:
   Enabled: true

@@ -4,6 +4,7 @@ Rateitapp::Engine.routes.draw do
   resources :users, only: [:show, :index], defaults: { format: :json } do
     get '/ratings/:ratable_type' => 'ratings#index'
     get '/ratings/:ratable_type/:ratable_id' => 'ratings#show'
+    delete '/ratings/:ratable_type/:ratable_id' => 'ratings#destroy'
     post '/ratings' => 'ratings#create'
   end
 

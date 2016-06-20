@@ -31,6 +31,17 @@ module Rateitapp
       end
     end
 
+    def destroy
+      rating = Rating.find_by ratable_type: params[:ratable_type], ratable_id: params[:ratable_id], user_id: params[:user_id]
+
+      if rating
+        rating.destroy
+        head status: 204
+      else
+        head status: 404
+      end
+    end
+
     private
 
     def rating_params

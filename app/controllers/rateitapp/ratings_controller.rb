@@ -4,6 +4,8 @@ require_dependency 'rateitapp/application_controller'
 module Rateitapp
   # Controller for actions involving ratings.
   class RatingsController < ApplicationController
+    MAX_SHOW_REQUESTS = 50
+
     def index
       ratings = Rating.where(ratable_type: params[:ratable_type], user_id: params[:user_id])
                       .page(params[:page]).per(params[:per_page])
@@ -12,12 +14,10 @@ module Rateitapp
     end
 
     def show
-      ratings = params[:ratable_id].split(',').map do |ratable_id|
-        Rating.find_by(ratable_type: params[:ratable_type], ratable_id: ratable_id, user_id: params[:user_id])
-      end
+      rating_ids = params[:ratable_id].split(',').take(MAX_SHOW_REQUESTS)
+      ratings = Rating.where(ratable_type: params[:ratable_type], ratable_id: rating_ids, user_id: params[:user_id])
 
-      serialization = ActiveModelSerializers::SerializableResource.new(ratings)
-      render json: serialization.to_json
+      render json: ratings
     end
 
     def create

@@ -90,12 +90,15 @@ end
 
 Then(/^I should get that song's rating information$/) do
   json = JSON.parse(last_response.body)['data']
+
   expect(json.first['attributes']['average']).to eq 3.0
   expect(json.first['attributes']['count']).to eq 6
 end
 
 Then(/^I should get those songs' ratings information$/) do
   json = JSON.parse(last_response.body)['data']
+
+  expect(json.count).to eq 3
   json.each do |item|
     expect(item['attributes']['average']).to eq 3.5
     expect(item['attributes']['count']).to eq 6
@@ -154,6 +157,8 @@ end
 
 Then(/^I get the rating information for those songs$/) do
   json = JSON.parse(last_response.body)['data']
+
+  expect(json.count).to eq 3
   json.each do |item|
     expect(item['attributes']['value']).to eq 3
     expect(item['attributes']['ratable-type']).to eq 'song'
@@ -170,8 +175,9 @@ Then(/^I get the ratings information for that ratable type$/) do
 end
 
 Then(/^it returns an error$/) do
-  expect(last_response.status).to eq 400
   json = JSON.parse(last_response.body)
+
+  expect(last_response.status).to eq 400
   expect(json['errors']).to include('source' => { 'pointer' => '/data/attributes/ratable-type' }, 'detail' => 'is not recognized')
   expect(json['errors'].size).to eq 1
 end

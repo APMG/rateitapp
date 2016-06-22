@@ -8,3 +8,4 @@ Gemfile.lock
 
 # Ignore Githook config.
 /.overcommit.yml
+/.git-hooks

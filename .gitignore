@@ -5,3 +5,6 @@ Gemfile.lock
 
 # Ignore ruby version.
 /.ruby-version
+
+# Ignore Githook config.
+/.overcommit.yml

@@ -56,7 +56,7 @@ name will give you your `ratable_type`, which in the examples below are song and
 
 Once you've installed the RateIt gem, you'll need to configure your plugin in order to set your ratable type. Add the name of your plugin to `config/initializers/rateit_app.rb` by editing the following line:
 
-    Rateitapp.plugins.add('name_of_your_plugin')
+    Rateitapp.plugin_manager.add('name_of_your_plugin')
 
 ## Testing
 

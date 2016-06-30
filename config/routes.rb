@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 Rateitapp::Engine.routes.draw do
   # Authenticated
-  resources :users, only: [:show, :index], defaults: { format: :json } do
+  resources :users, only: [:show], defaults: { format: :json } do
     get '/ratings/:ratable_type' => 'ratings#index'
     get '/ratings/:ratable_type/:ratable_id' => 'ratings#show'
     delete '/ratings/:ratable_type/:ratable_id' => 'ratings#destroy'

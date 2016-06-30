@@ -4,7 +4,8 @@ module Rateitapp
   class ApplicationController < ActionController::Base
     after_action :set_content_type
 
-    protect_from_forgery with: :exception
+    # TODO: Decide if we need to put this back.
+    # protect_from_forgery with: :null_session
 
     ActiveModelSerializers.config.adapter = :json_api
 

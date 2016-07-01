@@ -4,6 +4,8 @@ require_dependency 'rateitapp/application_controller'
 module Rateitapp
   # Controller for actions involving ratings.
   class RatingsController < ApplicationController
+    before_action :authenticate_user
+
     MAX_SHOW_REQUESTS = 50
 
     def index
@@ -46,6 +48,17 @@ module Rateitapp
 
     def rating_params
       params.permit(:user_id, :ratable_type, :ratable_id)
+    end
+
+    def authenticate_user
+      access_token = bearer_token
+      Rateitapp.oauth_plugin.validate_access_token(access_token) if access_token
+    end
+
+    def bearer_token
+      pattern = /^Bearer /
+      header = request.headers['Authorization']
+      header.gsub(pattern, '') if header && header.match(pattern)
     end
   end
 end

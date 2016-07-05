@@ -25,7 +25,13 @@ module Rateitapp
       it 'cannot be blank' do
         rating = build :rating, value: nil
         expect(rating).to_not be_valid
-        expect(rating.errors[:value]).to eq ["can't be blank"]
+        expect(rating.errors[:value]).to eq ["can't be blank", "can't be outside range"]
+      end
+
+      it 'cannot be outside validated range' do
+        rating = build :rating, value: 100
+        expect(rating).to_not be_valid
+        expect(rating.errors[:value]).to eq ["can't be outside range"]
       end
     end
 

@@ -4,5 +4,5 @@ require 'rateitapp/plugins'
 
 # Engine namespace
 module Rateitapp
-  mattr_accessor :oauth_domain
+  mattr_accessor :provider_domain
 end

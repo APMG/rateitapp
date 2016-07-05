@@ -19,5 +19,6 @@ module Rateitapp
     validates :ratable_type, presence: true
     validates :ratable_id, presence: true
     validates :user_id, presence: true
+    validates :value, inclusion: { in: 1..5, message: "can't be outside range" }
   end
 end

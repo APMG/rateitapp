@@ -9,9 +9,9 @@ Given(/^a set of ratings for one song$/) do
 end
 
 Given(/^a set of ratings for several songs$/) do
-  6.times { |i| create :song_rating, value: i + 1, ratable_id: 1 }
-  6.times { |i| create :song_rating, value: i + 1, ratable_id: 2 }
-  6.times { |i| create :song_rating, value: i + 1, ratable_id: 3 }
+  6.times { |i| create :song_rating, value: (i + 1) - 1, ratable_id: 1 }
+  6.times { |i| create :song_rating, value: (i + 1) - 1, ratable_id: 2 }
+  6.times { |i| create :song_rating, value: (i + 1) - 1, ratable_id: 3 }
 end
 
 Given(/^an existing rating$/) do
@@ -100,7 +100,7 @@ Then(/^I should get those songs' ratings information$/) do
 
   expect(json.count).to eq 3
   json.each do |item|
-    expect(item['attributes']['average']).to eq 3.5
+    expect(item['attributes']['average']).to eq 2.5
     expect(item['attributes']['count']).to eq 6
   end
 end

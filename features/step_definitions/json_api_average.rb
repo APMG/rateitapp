@@ -1,4 +1,35 @@
 # frozen_string_literal: true
+
+BEARER_TOKEN = '3123123123123123123123123123123123123123'
+
+def set_authorization_header
+  header 'Authorization', "Bearer #{BEARER_TOKEN}"
+end
+
+Given(/^a valid access token$/) do
+  stub_request(:get, 'https://provider.example.com/oauth/token/info')
+    .with(headers: {
+            'Authorization': "Bearer #{BEARER_TOKEN}",
+            'Host': 'provider.example.com'
+          })
+    .to_return(status: 200,
+               body: {
+                 'uid': '123456',
+                 'role': 'admin',
+                 'expires_at': "\u0004\bI\"\u001e2032-12-18 12:31:19 -0600\u0006:\rencoding\"\u000fISO-8859-1"
+               }.to_json,
+               headers: {})
+end
+
+Given(/^an invalid access token$/) do
+  stub_request(:get, 'https://provider.example.com/oauth/token/info')
+    .with(headers: {
+            'Authorization': "Bearer #{BEARER_TOKEN}",
+            'Host': 'provider.example.com'
+          })
+    .to_return(status: 401, body: {}.to_json, headers: {})
+end
+
 Given(/^a song plugin$/) do
   song_plugin = SuccessPlugin.new
   Rateitapp.plugin_manager.add song_plugin
@@ -33,6 +64,7 @@ Given(/^300 ratings$/) do
 end
 
 When(/^I DELETE that rating$/) do
+  set_authorization_header
   delete '/users/2/ratings/song/11'
 end
 
@@ -45,34 +77,42 @@ When(/^I ask for those songs' ratings$/) do
 end
 
 When(/^I post a rating to the API$/) do
+  set_authorization_header
   post '/users/2/ratings', value: 4, ratable_type: 'song', ratable_id: 47
 end
 
 When(/^I post that same rating to the API$/) do
+  set_authorization_header
   post '/users/2/ratings', value: 2, ratable_type: 'song', ratable_id: 11
 end
 
 When(/^I post an invalid rating to the API$/) do
+  set_authorization_header
   post '/users/2/ratings', value: 2, ratable_type: '', ratable_id: 11
 end
 
 When(/^I request a user's rating for that song$/) do
+  set_authorization_header
   get '/users/2/ratings/song/11'
 end
 
 When(/^I request a user's ratings for those songs$/) do
+  set_authorization_header
   get '/users/2/ratings/song/1,2,3'
 end
 
 When(/^I request all of a user's ratings from a ratable type$/) do
+  set_authorization_header
   get '/users/2/ratings/thing_type_2'
 end
 
 When(/^I post a rating to the API with an invalid type$/) do
+  set_authorization_header
   post '/users/2/ratings', value: 4, ratable_type: 'not_a_song', ratable_id: 47
 end
 
 When(/^I ask for too many ratings$/) do
+  set_authorization_header
   get '/users/2/ratings/song?per_page=275'
 end
 
@@ -86,6 +126,11 @@ end
 
 Then(/^I get a 404$/) do
   expect(last_response.status).to eq 404
+end
+
+Then(/^I get an access denied error message$/) do
+  expect(last_response.status).to eq 500
+  expect(last_response.body).to match(/InvalidOauthToken/)
 end
 
 Then(/^I should get that song's rating information$/) do

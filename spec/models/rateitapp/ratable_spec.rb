@@ -34,8 +34,8 @@ module Rateitapp
 
     describe '#average' do
       before :each do
-        6.times do |i|
-          create :rating, ratable_type: 'song', ratable_id: 1234, value: (i + 1) - 1
+        4.times do |i|
+          create :rating, ratable_type: 'song', ratable_id: 1234, value: i + 1
         end
         create :rating, ratable_type: 'other_stuff', ratable_id: 1235, value: 1
       end

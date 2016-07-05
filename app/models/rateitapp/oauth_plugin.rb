@@ -9,7 +9,7 @@ module Rateitapp
 
     def validate_access_token(access_token)
       # Form request
-      uri = URI("https://#{Rateitapp.oauth_domain}/oauth/token/info")
+      uri = URI("https://#{Rateitapp.provider_domain}/oauth/token/info")
       req = Net::HTTP::Get.new(uri)
       req['Authorization'] = "Bearer #{access_token}"
 

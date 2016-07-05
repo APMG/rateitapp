@@ -7,6 +7,7 @@ module Rateitapp
     before_action :authenticate_user
 
     MAX_SHOW_REQUESTS = 50
+    AUTH_PATTERN = /^Bearer /
 
     def index
       ratings = Rating.where(ratable_type: params[:ratable_type], user_id: params[:user_id])
@@ -51,14 +52,12 @@ module Rateitapp
     end
 
     def authenticate_user
-      access_token = bearer_token
-      Rateitapp.oauth_plugin.validate_access_token(access_token) if access_token
+      Rateitapp.oauth_plugin.validate_access_token(bearer_token) if bearer_token
     end
 
     def bearer_token
-      pattern = /^Bearer /
       header = request.headers['Authorization']
-      header.gsub(pattern, '') if header && header.match(pattern)
+      header.gsub(AUTH_PATTERN, '') if header && header.match(pattern)
     end
   end
 end

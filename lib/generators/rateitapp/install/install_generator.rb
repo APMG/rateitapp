@@ -3,6 +3,7 @@
 module Rateitapp
   # Install required configuration files.
   class InstallGenerator < Rails::Generators::Base
+    # rubocop:disable Metrics/MethodLength, Style/AlignParameters
     def create_initializer_file
       create_file 'config/initializers/rateitapp.rb',
 "# frozen_string_literal: true

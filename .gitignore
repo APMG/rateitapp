@@ -2,6 +2,7 @@
 log/*.log
 pkg/
 Gemfile.lock
+.DS_Store
 
 # Ignore ruby version.
 /.ruby-version

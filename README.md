@@ -14,45 +14,37 @@ Then bundle:
 
     $ bundle install
 
-### Plugin Setup
+### Generate Initializer and Model
 
-Once you've installed the RateIt gem, you'll need to configure your plugin in order to set your ratable type. Add the name of your plugin to `config/initializers/rateit_app.rb` by adding/editing the following line:
+You'll need to create both a RateIt plugin initializer and a playlist plugin model. To do this, enter the following command into your terminal:
+
+    $ rails g rateitapp:install
+
+Creating a model for your playlist (`app/models/playlist_plugin.rb`) will validate that the items that are being rated are actually ratable objects in your database. Be sure to configure your plugin in order to set your ratable type. Add the name of your plugin to `config/initializers/rateit_app.rb` by editing the following line:
 
     Rateitapp.plugin_manager.add(PlaylistPlugin.new('the-name_of_your_plugin'))
 
-### Create Plugin Model
+The model requires an environment variable be set in your `config/application.rb` file. This directs the model where to check when validating items being rated:
 
-Create a model for your playlist called playlist_plugin.rb - this will validate that the items that are being rated are actually ratable.
+    config.playlist_domain = 'your_playlist.domain.com'
 
-    class PlaylistPlugin
-      def initialize(service_name)
-        @service_name = service_name
-      end
+### Copy Migrations
 
-      def name
-        # ratable_type
-        "#{@service_name}-song"
-      end
+Copy the migrations from the RateIt engine and create your database:
 
-      def valid?(rating)
-        uri = URI("http://#{Rails.configuration.playlist_domain}/api/v1/services/#{@service_name}/songs/#{rating.ratable_id}")
-        res = Net::HTTP.get_response(uri)
-
-        if res.is_a?(Net::HTTPSuccess)
-          true
-        else
-          rating.errors.add(:ratable_id, 'ID is not valid')
-
-          false
-        end
-      end
-    end
+    $ rake rateitapp:install:migrations
 
 ### Configuring Routes
 
 You'll need to mount the RateIt App as an engine in your routes. Place the code below in `config/routes.rb`:
 
     mount Rateitapp::Engine => '/'
+
+### OAuth
+
+Note that RateIt depends on OAuth for user authentication. You can set the location of your auth server in your `config/application.rb` file:
+
+    config.oauth_domain = 'accounts.your_auth_server.com'
 
 ## Usage
 

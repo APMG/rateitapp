@@ -16,3 +16,8 @@ Style/Documentation:
   Exclude:
     - 'db/migrate/*'
     - 'spec/**/*'
+
+# Tests have lots of lines.
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*'

@@ -4,6 +4,17 @@ before_script:
   - mysql -e 'CREATE DATABASE rateitapp_test;'
   - cp spec/dummy/config/database.ci.yml spec/dummy/config/database.yml
   - bin/rake db:setup
+script:
+  - bundle install
+  - bundle exec rubocop
+  - bundle exec brakeman
+  - bundle exec rspec
+  - bundle exec cucumber
+  # Rails 4
+  - rm Gemfile.lock
+  - RATEITAPP_RAILS4=true bundle install
+  - RATEITAPP_RAILS4=true bundle exec rspec
+  - RATEITAPP_RAILS4=true bundle exec cucumber
 language: ruby
 rvm:
-  - 2.3.0
+  - '2.4'

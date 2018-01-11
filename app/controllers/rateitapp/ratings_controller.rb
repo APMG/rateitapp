@@ -53,14 +53,13 @@ module Rateitapp
     end
 
     def authenticate_user
-      if !bearer_token || !Rateitapp.oauth_plugin.validate_access_token(bearer_token).valid?
-        raise InvalidOauthToken, 'Invalid oAuth token'
-      end
+      return if bearer_token && Rateitapp.oauth_plugin.validate_access_token(bearer_token).valid?
+      raise InvalidOauthToken, 'Invalid oAuth token'
     end
 
     def bearer_token
       header = request.headers['Authorization']
-      header.gsub(AUTH_PATTERN, '') if header && header.match(AUTH_PATTERN)
+      header.gsub(AUTH_PATTERN, '') if header&.match(AUTH_PATTERN)
     end
 
     class InvalidOauthToken < StandardError; end

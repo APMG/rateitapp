@@ -32,11 +32,11 @@ group :test do
 end
 
 group :test, :development do
+  gem 'factory_girl_rails'
   gem 'rspec'
   gem 'rspec-rails'
-  gem 'factory_girl_rails'
 
-  gem 'rubocop'
   gem 'pry'
   gem 'pry-byebug'
+  gem 'rubocop'
 end

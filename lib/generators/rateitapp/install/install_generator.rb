@@ -33,5 +33,6 @@ class PlaylistPlugin
   end
 end"
     end
+    # rubocop:enable Metrics/MethodLength, Style/AlignParameters
   end
 end

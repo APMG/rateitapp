@@ -21,3 +21,7 @@ Style/Documentation:
 Metrics/BlockLength:
   Exclude:
     - 'spec/**/*'
+
+# We need to support Rails 4 for now.
+Rails/ApplicationRecord:
+  Enabled: false

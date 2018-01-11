@@ -51,6 +51,6 @@ RSpec::Core::RakeTask.new(:spec)
 Cucumber::Rake::Task.new(:features)
 
 desc 'Run all the tests'
-task tests: [:rubocop, :spec, :features, :brakeman]
+task tests: %i[rubocop spec features brakeman]
 
 task default: :tests

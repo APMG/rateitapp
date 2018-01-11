@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require_dependency 'rateitapp/application_controller'
 
 module Rateitapp

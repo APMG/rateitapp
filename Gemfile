@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 source 'https://rubygems.org'
 
 # Declare your gem's dependencies in rateitapp.gemspec.
@@ -13,6 +14,8 @@ gemspec
 
 # To use a debugger
 # gem 'byebug', group: [:development, :test]
+
+gem 'rails', ENV['RATEITAPP_RAILS4'] ? '~> 4.2' : '~> 5.1'
 
 group :development do
   # Mark up the models and such with database info.
@@ -29,11 +32,11 @@ group :test do
 end
 
 group :test, :development do
+  gem 'factory_girl_rails'
   gem 'rspec'
   gem 'rspec-rails'
-  gem 'factory_girl_rails'
 
-  gem 'rubocop'
   gem 'pry'
   gem 'pry-byebug'
+  gem 'rubocop'
 end

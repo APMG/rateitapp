@@ -1,11 +1,11 @@
 # frozen_string_literal: true
+
 module Rateitapp
   # Base controller class.
   class ApplicationController < ActionController::Base
     after_action :set_content_type
 
-    # TODO: Decide if we need to put this back.
-    # protect_from_forgery with: :null_session
+    protect_from_forgery with: :null_session
 
     ActiveModelSerializers.config.adapter = :json_api
 

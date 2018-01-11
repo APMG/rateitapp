@@ -4,6 +4,7 @@ AllCops:
   TargetRubyVersion: 2.3
   Exclude:
     - spec/dummy/db/schema.rb
+    - bin/**/*
 
 Rails:
   Enabled: true
@@ -15,3 +16,12 @@ Style/Documentation:
   Exclude:
     - 'db/migrate/*'
     - 'spec/**/*'
+
+# Tests have lots of lines.
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*'
+
+# We need to support Rails 4 for now.
+Rails/ApplicationRecord:
+  Enabled: false

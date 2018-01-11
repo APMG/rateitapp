@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 $LOAD_PATH.push File.expand_path('../lib', __FILE__)
 
 # Maintain your gem's version:
@@ -19,11 +20,11 @@ Gem::Specification.new do |s|
 
   s.test_files = Dir['spec/**/*']
 
-  s.add_dependency 'rails', '~> 4.2'
   s.add_dependency 'active_model_serializers', '~> 0.10.0'
+  s.add_dependency 'immutable-struct'
   s.add_dependency 'kaminari', '~> 0.17.0'
   s.add_dependency 'oauth2'
-  s.add_dependency 'immutable-struct'
+  s.add_dependency 'rails', '>= 4.0', '< 6.0'
 
   s.add_development_dependency 'mysql2'
 end

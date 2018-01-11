@@ -16,7 +16,7 @@ module Rateitapp
         plugin_manager.add plugin1
         plugin_manager.add plugin2
 
-        is_expected.to eq %w(ratable_1 ratable_2)
+        is_expected.to eq %w[ratable_1 ratable_2]
       end
     end
 
@@ -24,7 +24,7 @@ module Rateitapp
       it 'successfully adds a new plugin' do
         expect(plugin_manager.names).to eq []
         plugin_manager.add double('plugin1', name: 'ratable_1')
-        expect(plugin_manager.names).to eq %w(ratable_1)
+        expect(plugin_manager.names).to eq %w[ratable_1]
       end
     end
 

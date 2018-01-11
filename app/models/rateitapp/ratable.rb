@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Rateitapp
   # The thing being rated.
   class Ratable

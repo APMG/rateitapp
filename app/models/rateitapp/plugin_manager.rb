@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Rateitapp
   # A manager for the plugins.
   class PluginManager

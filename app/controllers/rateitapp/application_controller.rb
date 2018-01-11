@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Rateitapp
   # Base controller class.
   class ApplicationController < ActionController::Base

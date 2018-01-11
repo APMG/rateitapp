@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 Rateitapp::Engine.routes.draw do
   # Authenticated
   resources :users, only: [:show], defaults: { format: :json } do

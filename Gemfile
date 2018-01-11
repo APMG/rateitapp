@@ -14,6 +14,8 @@ gemspec
 # To use a debugger
 # gem 'byebug', group: [:development, :test]
 
+gem 'rails', ENV['RATEITAPP_RAILS4'] ? '~> 4.2' : '~> 5.1'
+
 group :development do
   # Mark up the models and such with database info.
   gem 'annotate'

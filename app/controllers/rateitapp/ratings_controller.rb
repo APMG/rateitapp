@@ -39,9 +39,9 @@ module Rateitapp
 
       if rating
         rating.destroy
-        head status: 204
+        head 204
       else
-        head status: 404
+        head 404
       end
     end
 

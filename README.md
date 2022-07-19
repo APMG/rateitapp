@@ -1,3 +1,9 @@
+***NOTICE***: **This project is archived**
+
+This project is archival only. It is no longer maintained or supported.
+
+---
+
 # Welcome to the RateIt App
 
 [![Build Status](https://travis-ci.org/APMG/rateitapp.svg?branch=master)](https://travis-ci.org/APMG/rateitapp)
